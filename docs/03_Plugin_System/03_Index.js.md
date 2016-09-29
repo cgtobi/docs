@@ -1,10 +1,10 @@
 ### Index.js aka the plugin's core
 
-The index.js file of every plugin is where the magic goes on. It has some predefined and mandatory functions and a standardized layout. Depending on you'r plugin's category, this structure needs to change accordingly. We'll start by detailing a generic plugin structure.
+The index.js file of every plugin is where the magic happens. It has some predefined and mandatory functions and a standardized layout. Depending on your plugin's category, this structure needs to change accordingly. We will start by detailing a generic plugin structure.
 
 ### Generic structure
 
-The first part is about module dependencies, we'll need to list all the node modules our plugin depends on (example taken from Spotify plugin).
+The first part is about module dependencies, where all the node module dependencies for the plugin are listed. (example taken from Spotify plugin)
 
 ```javascript
 'use strict';
@@ -24,7 +24,7 @@ IMPORTANT TIPS:
 * The `'use strict';` declaration at the beginning will ensure no obvious coding mispractices will happen, [more info on the matter](http://www.w3schools.com/js/js_strict.asp)
 * Use the minimum amount of modules needed, and try to avoid modules that needs compilation (you will spot those because they'll take longer on npm install), so you will avoid to mantain two separate versions for x86 and arm architectures.
 
-Then we will define the plugin class and reference to other core Volumio's internals:
+Then we define the plugin class and reference to other core Volumio's internals:
 
 ```javascript
 module.exports = ControllerSpop;
@@ -91,11 +91,11 @@ ControllerSpop.prototype.onStart = function() {
 **IMPORTANT:**
 
 * You'll notice that we use promises here. That's why Volumio needs to know when the plugin has actually started, or if it failed. So what we're doing is returning the promise on successful start, and rejecting it if it doesn't start properly.
-* The strange function  `this.commandRouter.sharedVars.registerCallback('alsa.outputdevice', this.rebuildSPOPDAndRestartDaemon.bind(this));` does one important thing. It binds to a shared system value (alsa.outputdevice, which is the output device) and when it changes it triggers the function `rebuildSPOPDAndRestartDaemon` that rewrites spop config file and restarts it.
+* The function  `this.commandRouter.sharedVars.registerCallback('alsa.outputdevice', this.rebuildSPOPDAndRestartDaemon.bind(this));` is responsible to bind to a shared system value (alsa.outputdevice, which is the output device). It triggers the function `rebuildSPOPDAndRestartDaemon` that rewrites the spop config file and restarts it.
 
 #### On stop
 
-When a plugin is stopped, this function gets executed. What we're doing here is killing the spop daemon. We must resolve the promise to signal everything was ok
+When a plugin is stopped, this function gets executed. It will kill the spop daemon. We must resolve the promise to signal everything was ok.
 
 ```javascript
 ControllerSpop.prototype.onStop = function() {
@@ -114,7 +114,7 @@ ControllerSpop.prototype.onStop = function() {
 
 #### Get Configuration files
 
-Very straightforwarding, we load the .json configuration file for this plugin.
+The plugin configuration is loaded from the given json configuration file.
 
 ```javascript
 ControllerSpop.prototype.getConfigurationFiles = function()
